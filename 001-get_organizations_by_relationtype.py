@@ -3,7 +3,7 @@ import json
 
 # Variables
 subdomain = ""
-relationtype = ""
+relation_type_id = ""
 authentication_key = ""
 authentication_secret = ""
 
@@ -18,7 +18,7 @@ headers = {
 
 payload = ""
 
-conn.request("GET", "/api/v2/crm/organization?q%5Brelation_type.id%5D=" + relationtype, payload, headers)
+conn.request("GET", "/api/v2/crm/organization?q%5Brelation_type.id%5D=" + relation_type_id, payload, headers)
 res = conn.getresponse()
 
 # Data wrangling
@@ -34,11 +34,10 @@ with open('data.json', 'r', encoding='utf-8') as f:
 
     for i in data["data"]:
         org_ids.append(i["id"])
-        print(org_ids)
 
     for i in org_ids:
         print(i)
         conn.request("DELETE", "/api/v2/crm/organization/" + i, payload, headers)
         res = conn.getresponse()
-        data = res.read()
-        print(data.decode("utf-8"))
+        print(res.read().decode('UTF-8'))
+        
